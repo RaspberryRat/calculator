@@ -44,48 +44,50 @@ btns.forEach(button =>
   button.addEventListener('click', () => {
     if (button.id === 'clear') {
       clearInput();
+    } else if (button.id === 'add' || button.id === 'sub' || button.id === 'multiply' || button.id === 'divide' || button.id === 'equal') {
+    operatorInput(button.id);
     } else {
-    saveInput(button.id);
+      saveInput(button.id);
     }
-  }));
+}));
 
 let arr = [];
 
-function saveInput(userInput) {
-    //console.log(arr);
-    if (userInput === 'equal' && arr.length === 3) {
-      //console.log(arr.length);
-      let a = parseInt(arr[0]);
-      let b = parseInt(arr[1]);
-      let c = arr[2];
-      //console.log(typeof(c));
-      //console.log('user input is ' + a, + b, + c);
-      //console.log(typeof(a), typeof(b), typeof(c));
-      arr = []; // arr is getting NaN
-      operate(a, b, c);
-      arr = [];
-      //console.log('arr is ' + arr + 'and length ' + arr.length);
-    } else if (userInput === 'add' || userInput === 'sub' || userInput === 'multiply' || userInput === 'divide') {
-      arr.push(userInput);
-      if (userInput === 'add') {
-        displayAns('+');
-      } else if (userInput === 'sub') {
-        displayAns('-');
-      } else if (userInput === 'multiply') {
-        displayAns('X');
-      } else if (userInput === 'divide') {
-        displayAns('/');
-      }
-      //console.log('array is ' + arr);
-    } else {
-      displayAns(userInput);
-      let num = parseInt(userInput);
-      arr.unshift(num); // need to figure out how to add second number to second spot in array second num is currently first spot
-      //console.log('ARRAY is ' + arr);
-      //console.log('ARRAY length is ' + arr.length);
-    }
-  }
-
+//function saveInput(userInput) {
+//    //console.log(arr);
+//    if (userInput === 'equal' && arr.length === 3) {
+//      //console.log(arr.length);
+//      let a = parseInt(arr[0]);
+//      let b = parseInt(arr[1]);
+//      let c = arr[2];
+//      //console.log(typeof(c));
+//      //console.log('user input is ' + a, + b, + c);
+//      //console.log(typeof(a), typeof(b), typeof(c));
+//      arr = []; // arr is getting NaN
+//      operate(a, b, c);
+//      arr = [];
+//      //console.log('arr is ' + arr + 'and length ' + arr.length);
+//    } else if (userInput === 'add' || userInput === 'sub' || userInput === 'multiply' || userInput === 'divide') {
+//      arr.push(userInput);
+//      if (userInput === 'add') {
+//        displayAns('+');
+//      } else if (userInput === 'sub') {
+//        displayAns('-');
+//      } else if (userInput === 'multiply') {
+//        displayAns('X');
+//      } else if (userInput === 'divide') {
+//        displayAns('/');
+//      }
+//      //console.log('array is ' + arr);
+//    } else {
+//      displayAns(userInput);
+//      let num = parseInt(userInput);
+//      arr.unshift(num); // need to figure out how to add second number to second spot in array second num is currently first spot
+//      //console.log('ARRAY is ' + arr);
+//      //console.log('ARRAY length is ' + arr.length);
+//    }
+//  }
+//
   function displayAns(ans) {
     display.textContent = `${ans}`;
   }
@@ -96,4 +98,29 @@ function saveInput(userInput) {
     console.log(arr + arr.length);
   }
 
+  function saveInput(num) {
+    let numCount = 1;
+    if (num === 'add' || num === 'sub' || num === 'multiply' || num === 'divide' || num === 'equal') {
+      num[numCount] = parseInt(arr.join(''));      // how to create a new var incrementally
+      console.log(num[numCount]);
+      numCount ++;
+      arr = [];
+      }     
+    console.log('numCount is ' + numCount + ' arr length is ' + arr.length);
+    arr.push(num);
+    console.log(arr);
+  }
 
+  function operatorInput(operator) {
+    saveInput(operator);
+  }
+
+
+
+
+  //user presses input save to variable - maybe a loop. when user presses an operator add concatenante numbers and add
+  // to array
+
+  
+
+  
