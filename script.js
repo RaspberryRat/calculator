@@ -44,19 +44,12 @@ btns.forEach(button =>
   button.addEventListener('click', () => {
     saveInput(button.id);
   }));
+
 let arr = [];
+
 function saveInput(userInput) {
     //console.log(arr);
-    if (userInput === 'add' || userInput === 'sub' || userInput === 'multiply' || userInput === 'divide') {
-      arr.push(userInput);
-      //console.log('array is ' + arr);
-    } else {
-      let num = parseInt(userInput);
-      arr.unshift(num); // need to figure out how to add second number to second spot in array
-      //console.log('ARRAY is ' + arr);
-      //console.log('ARRAY length is ' + arr.length);
-    }//
-    if (arr.length === 3) {
+    if (userInput === 'equal' && arr.length === 3) {
       //console.log(arr.length);
       let a = parseInt(arr[0]);
       let b = parseInt(arr[1]);
@@ -64,10 +57,30 @@ function saveInput(userInput) {
       //console.log(typeof(c));
       //console.log('user input is ' + a, + b, + c);
       //console.log(typeof(a), typeof(b), typeof(c));
-      arr = [];
+      arr = []; // arr is getting NaN
       operate(a, b, c);
-      
+      arr = [];
+      console.log('arr is ' + arr + 'and length ' + arr.length);
+    } else if (userInput === 'add' || userInput === 'sub' || userInput === 'multiply' || userInput === 'divide') {
+      arr.push(userInput);
+      if (userInput === 'add') {
+        displayAns('+');
+      } else if (userInput === 'sub') {
+        displayAns('-');
+      } else if (userInput === 'multiply') {
+        displayAns('X');
+      } else if (userInput === 'divide') {
+        displayAns('/');
+      }
+      //console.log('array is ' + arr);
+    } else {
+      displayAns(userInput);
+      let num = parseInt(userInput);
+      arr.unshift(num); // need to figure out how to add second number to second spot in array second num is currently first spot
+      console.log('ARRAY is ' + arr);
+      //console.log('ARRAY length is ' + arr.length);
     }
+    
   }
 
   function displayAns(ans) {
