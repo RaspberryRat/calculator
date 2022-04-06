@@ -44,3 +44,11 @@ button {
   display: flex;
   flex-direction: column;
 }
+
+.display {
+  border: 2px black solid;
+  width: 160px;
+  height: 30px;
+  text-align: right;
+  font-size: 24px;
+}
