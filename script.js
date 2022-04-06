@@ -42,7 +42,11 @@ const display = document.querySelector('.display');
 
 btns.forEach(button =>
   button.addEventListener('click', () => {
+    if (button.id === 'clear') {
+      clearInput();
+    } else {
     saveInput(button.id);
+    }
   }));
 
 let arr = [];
@@ -60,7 +64,7 @@ function saveInput(userInput) {
       arr = []; // arr is getting NaN
       operate(a, b, c);
       arr = [];
-      console.log('arr is ' + arr + 'and length ' + arr.length);
+      //console.log('arr is ' + arr + 'and length ' + arr.length);
     } else if (userInput === 'add' || userInput === 'sub' || userInput === 'multiply' || userInput === 'divide') {
       arr.push(userInput);
       if (userInput === 'add') {
@@ -77,16 +81,19 @@ function saveInput(userInput) {
       displayAns(userInput);
       let num = parseInt(userInput);
       arr.unshift(num); // need to figure out how to add second number to second spot in array second num is currently first spot
-      console.log('ARRAY is ' + arr);
+      //console.log('ARRAY is ' + arr);
       //console.log('ARRAY length is ' + arr.length);
     }
-    
   }
 
   function displayAns(ans) {
     display.textContent = `${ans}`;
   }
   
-
+  function clearInput() {
+    arr = []
+    displayAns('Input cleared');
+    console.log(arr + arr.length);
+  }
 
 
