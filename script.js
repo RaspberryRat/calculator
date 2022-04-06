@@ -4,6 +4,7 @@
 function addition(a, b) {
   let ans = a + b;
   displayAns(ans);
+  console.log(ans);
 }
 
 function substract (a, b) {
@@ -44,8 +45,6 @@ btns.forEach(button =>
   button.addEventListener('click', () => {
     if (button.id === 'clear') {
       clearInput();
-    } else if (button.id === 'add' || button.id === 'sub' || button.id === 'multiply' || button.id === 'divide' || button.id === 'equal') {
-    operatorInput(button.id);
     } else {
       saveInput(button.id);
     }
@@ -100,20 +99,34 @@ let arr = [];
 
   function saveInput(num) {
     let numCount = 1;
-    if (num === 'add' || num === 'sub' || num === 'multiply' || num === 'divide' || num === 'equal') {
-      num[numCount] = parseInt(arr.join(''));      // how to create a new var incrementally
-      console.log(num[numCount]);
+    let num1;
+    let numArray = []
+    if (num === 'equal') {
+      let a = parseInt(numArray[0]);
+      let b = parseInt(numArray[1]);
+      let c = numArray[2];
+      //console.log(typeof(c));
+      //console.log('user input is ' + a, + b, + c);
+      //console.log(typeof(a), typeof(b), typeof(c));
+      operate(a, b, c);
+      return arr = [];
+    }
+    if (num === 'add' || num === 'sub' || num === 'multiply' || num === 'divide') {
+      num1 = parseInt(arr.join(''));      // how to create a new var incrementally
+      console.log(num1);
       numCount ++;
-      arr = [];
-      }     
-    console.log('numCount is ' + numCount + ' arr length is ' + arr.length);
+      console.log(arr);
+      numArray.unshift(num1);
+      numArray.push(num); //operator
+      return arr = [];
+    } 
+
+    
     arr.push(num);
     console.log(arr);
   }
 
-  function operatorInput(operator) {
-    saveInput(operator);
-  }
+ 
 
 
 
