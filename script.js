@@ -1,25 +1,28 @@
 //sCreate a new function operate that 
 //takes an operator and 2 numbers and then calls one of the above functions on the numbers.
 
-function addition(a, b) {
-  let ans = a + b;
+function addition(numArray) {
+  ans = numArray.reduce((preValue, currentValue) => parseInt(preValue) + parseInt(currentValue));	
   displayAns(ans);
   console.log(ans);
 }
 
-function substract (a, b) {
-  let ans = a - b;
+function substract(numArray) {
+  ans = numArray.reduce((preValue, currentValue) => parseInt(preValue) - parseInt(currentValue));	
   displayAns(ans);
+  console.log(ans);
 }
 
-function multiply(a, b) {
-  let ans = a * b;
+function multiply(numArray) {
+  ans = numArray.reduce((preValue, currentValue) => parseInt(preValue) * parseInt(currentValue));	
   displayAns(ans);
+  console.log(ans);
 }
 
-function divide(a, b) {
-  let ans = a / b;
+function divide(numArray) {
+  ans = numArray.reduce((preValue, currentValue) => parseInt(preValue) / parseInt(currentValue));	
   displayAns(ans);
+  console.log(ans);
 }
 
 
@@ -47,6 +50,7 @@ btns.forEach(button =>
       clearInput();
     } else {
       saveInput(button.id);
+      displayAns(button.id);
     }
 }));
 
@@ -88,7 +92,27 @@ let arr = [];
 //  }
 //
   function displayAns(ans) {
-    display.textContent = `${ans}`;
+    switch (ans) {
+      case 'add':
+        display.textContent = '';
+       break;
+      case 'sub':
+        display.textContent = '';
+        break;
+      case 'multiply':
+        display.textContent = '';
+        break;
+      case 'divide':
+        display.textContent = '';
+        break;
+      case 'equal':
+        display.textContent = '';
+        break;
+      default:
+        display.textContent += `${ans}`;
+     }
+
+    
   }
   
   function clearInput() {
@@ -96,37 +120,66 @@ let arr = [];
     displayAns('Input cleared');
     console.log(arr + arr.length);
   }
+  let numCount = 0;
+  let numArray = [];
+  let operator;
+
 
   function saveInput(num) {
-    let numCount = 1;
-    let num1;
-    let numArray = []
-    if (num === 'equal') {
-      let a = parseInt(numArray[0]);
-      let b = parseInt(numArray[1]);
-      let c = numArray[2];
-      //console.log(typeof(c));
-      //console.log('user input is ' + a, + b, + c);
-      //console.log(typeof(a), typeof(b), typeof(c));
-      operate(a, b, c);
-      return arr = [];
-    }
-    if (num === 'add' || num === 'sub' || num === 'multiply' || num === 'divide') {
-      num1 = parseInt(arr.join(''));      // how to create a new var incrementally
-      console.log(num1);
-      numCount ++;
-      console.log(arr);
-      numArray.unshift(num1);
-      numArray.push(num); //operator
-      return arr = [];
-    } 
 
-    
+    if (num === 'add' || num === 'sub' || num === 'multiply' || num === 'divide') {
+      numArray[numCount] = arr.join('');
+      operator = num;
+      console.log(numArray);
+      saveOperator(num);
+      numCount ++;
+      console.log(numCount);
+      clearArr();
+      console.log(arr);
+      return numArray;
+    } else if (num === 'equal') {
+      numArray.push(arr.join(''));
+      console.log(numArray);
+      numCount = 0;
+      calcAns(numArray, operator);
+    }
     arr.push(num);
     console.log(arr);
   }
 
- 
+
+
+ function clearArr() {
+   return arr = [];
+ }
+
+ function saveOperator(operator) {
+   return operator = operator;
+ }
+
+ function calcAns(numArray, operator) {
+   clearArr();
+   switch (operator) {
+    case 'add':
+     addition(numArray);
+     break;
+    case 'sub':
+      substract(numArray);
+      break;
+    case 'multiply':
+      multiply(numArray);
+      break;
+    case 'divide':
+      divide(numArray);
+      break;
+    default:
+      alert('ERROR ERROR ERROR');
+   }
+  }
+
+    
+
+
 
 
 
@@ -137,3 +190,6 @@ let arr = [];
   
 
   
+//take each number input and add to an array
+//if the unit presses an operator button, take numbers in array and combine into number
+//
