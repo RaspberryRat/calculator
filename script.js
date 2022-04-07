@@ -60,114 +60,92 @@ btns.forEach(button =>
 }));
 
 let arr = [];
+let numArray = [];
+let operator = [];
 
-  function displayAns(ans) {
-    switch (ans) {
-      case 'add':
-        display.textContent = '';
-       break;
-      case 'sub':
-        display.textContent = '';
-        break;
-      case 'multiply':
-        display.textContent = '';
-        break;
-      case 'divide':
-        display.textContent = '';
-        break;
-      case 'equal':
-        display.textContent = `${runningTotal}`;
-        break;
-      default:
-        display.textContent += `${ans}`;
-     }
-
-    
-  }
-  
-  function clearInput() {
-    arr = []
-    displayAns('Input cleared');
-    console.log(arr + arr.length);
-  }
-
-  let numArray = [];
-  let operator = [];
-
-
-  function saveInput(input) {
-
-    if (numArray < 2 && input != 'number') {
-      if (input === 'add' || input === 'sub' || input === 'multiply' || input === 'divide') {
-        numArray.push(arr.join(''));
-        saveOperator(input);
-        console.log(numArray);
-        console.log(arr);
-        clearArr();
-        return numArray;
-      }
-    }
-    if (input === 'equal') {
-      numArray.push(arr.join(''));
-      console.log(numArray);
-      calcAns(numArray, input);
-      clearArr();
-    } else if (input === 'add' || input === 'sub' || input === 'multiply' || input === 'divide') {
-      numArray.push(arr.join(''));
-      let currentOperator = operator.shift();
-      calcAns(numArray, currentOperator);
-    }
-    arr.push(input);
-    console.log(arr);
-  }
-
- function clearArr() {
-   return arr = [];
- }
-
- function saveOperator(input) {
-   operator.push(input);
- }
-
-
-
-
- function calcAns(numArray, operator) {
-   clearArr();
-   switch (operator) {
+function displayAns(ans) {
+  switch (ans) {
     case 'add':
-     addition(numArray);
+      display.textContent = '';
      break;
     case 'sub':
-      substract(numArray);
+      display.textContent = '';
       break;
     case 'multiply':
-      multiply(numArray);
+      display.textContent = '';
       break;
     case 'divide':
-      divide(numArray);
+      display.textContent = '';
       break;
     case 'equal':
-      displayAns(runningTotal);
-      break;      
+      display.textContent = `${runningTotal}`;
+      break;
     default:
-      alert('ERROR ERROR ERROR');
+      display.textContent += `${ans}`;
    }
+}
+  
+function clearInput() {
+  arr = []
+  displayAns('Input cleared');
+  console.log(arr + arr.length);
+}
+
+
+
+
+function saveInput(input) {
+  if (numArray < 2 && input != 'number') {
+    if (input === 'add' || input === 'sub' || input === 'multiply' || input === 'divide') {
+      numArray.push(arr.join(''));
+      saveOperator(input);
+      console.log(numArray);
+      console.log(arr);
+      clearArr();
+      return numArray;
+    }
   }
+  if (input === 'equal') {
+    numArray.push(arr.join(''));
+    console.log(numArray);
+    calcAns(numArray, input);
+    clearArr();
+  } else if (input === 'add' || input === 'sub' || input === 'multiply' || input === 'divide') {
+    numArray.push(arr.join(''));
+    let currentOperator = operator.shift();
+    clearArr();
+    calcAns(numArray, currentOperator);
+  }
+  arr.push(input);
+  console.log(arr);
+}
 
-    
+function clearArr() {
+  return arr = [];
+}
+function saveOperator(input) {
+  operator.push(input);
+}
 
-
-
-
-
-
-  //user presses input save to variable - maybe a loop. when user presses an operator add concatenante numbers and add
-  // to array
-
-  
-
-  
-//take each number input and add to an array
-//if the unit presses an operator button, take numbers in array and combine into number
-//
+function calcAns(numArray, operator) {
+  clearArr();
+  switch (operator) {
+   case 'add':
+    addition(numArray);
+    break;
+   case 'sub':
+     substract(numArray);
+     break;
+   case 'multiply':
+     multiply(numArray);
+     break;
+   case 'divide':
+     divide(numArray);
+     break;
+   case 'equal':
+     displayAns(runningTotal);
+     break;      
+   default:
+     alert('ERROR ERROR ERROR');
+  }
+ }
