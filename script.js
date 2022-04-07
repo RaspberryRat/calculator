@@ -107,8 +107,9 @@ function saveInput(input) {
   }
   if (input === 'equal') {
     numArray.push(arr.join(''));
+    let currentOperator = operator.shift();
     console.log(numArray);
-    calcAns(numArray, input);
+    calcAns(numArray, currentOperator, equal);
     clearArr();
   } else if (input === 'add' || input === 'sub' || input === 'multiply' || input === 'divide') {
     numArray.push(arr.join(''));
@@ -127,25 +128,45 @@ function saveOperator(input) {
   operator.push(input);
 }
 
-function calcAns(numArray, operator) {
+function calcAns(numArray, operator, equal) {
   clearArr();
-  switch (operator) {
-   case 'add':
-    addition(numArray);
-    break;
-   case 'sub':
-     substract(numArray);
-     break;
-   case 'multiply':
-     multiply(numArray);
-     break;
-   case 'divide':
-     divide(numArray);
-     break;
-   case 'equal':
-     displayAns(runningTotal);
-     break;      
-   default:
-     alert('ERROR ERROR ERROR');
+  if (equal) {
+    switch (operator) {
+      case 'add':
+       addition(numArray);
+       displayAns(runningTotal);
+       break;
+      case 'sub':
+        substract(numArray);
+        displayAns(runningTotal);
+        break;
+      case 'multiply':
+        multiply(numArray);
+        displayAns(runningTotal);
+        break;
+      case 'divide':
+        divide(numArray);
+        displayAns(runningTotal);
+        break;    
+      default:
+        alert('ERROR ERROR ERROR');
+    }
+    } else {
+    switch (operator) {
+      case 'add':
+       addition(numArray);
+       break;
+      case 'sub':
+        substract(numArray);
+        break;
+      case 'multiply':
+        multiply(numArray);
+        break;
+      case 'divide':
+        divide(numArray);
+        break;    
+      default:
+        alert('ERROR ERROR ERROR');
+    }
   }
  }
