@@ -1,28 +1,33 @@
 //sCreate a new function operate that 
 //takes an operator and 2 numbers and then calls one of the above functions on the numbers.
+let runningTotal = [];
 
 function addition(numArray) {
   ans = numArray.reduce((preValue, currentValue) => parseInt(preValue) + parseInt(currentValue));	
   displayAns(ans);
   console.log(ans);
+  return runningTotal.push(ans);
 }
 
 function substract(numArray) {
   ans = numArray.reduce((preValue, currentValue) => parseInt(preValue) - parseInt(currentValue));	
   displayAns(ans);
   console.log(ans);
+  return runningTotal.push(ans);
 }
 
 function multiply(numArray) {
   ans = numArray.reduce((preValue, currentValue) => parseInt(preValue) * parseInt(currentValue));	
   displayAns(ans);
   console.log(ans);
+  return runningTotal.push(ans);
 }
 
 function divide(numArray) {
   ans = numArray.reduce((preValue, currentValue) => parseInt(preValue) / parseInt(currentValue));	
   displayAns(ans);
   console.log(ans);
+  return runningTotal.push(ans);
 }
 
 
@@ -56,41 +61,6 @@ btns.forEach(button =>
 
 let arr = [];
 
-//function saveInput(userInput) {
-//    //console.log(arr);
-//    if (userInput === 'equal' && arr.length === 3) {
-//      //console.log(arr.length);
-//      let a = parseInt(arr[0]);
-//      let b = parseInt(arr[1]);
-//      let c = arr[2];
-//      //console.log(typeof(c));
-//      //console.log('user input is ' + a, + b, + c);
-//      //console.log(typeof(a), typeof(b), typeof(c));
-//      arr = []; // arr is getting NaN
-//      operate(a, b, c);
-//      arr = [];
-//      //console.log('arr is ' + arr + 'and length ' + arr.length);
-//    } else if (userInput === 'add' || userInput === 'sub' || userInput === 'multiply' || userInput === 'divide') {
-//      arr.push(userInput);
-//      if (userInput === 'add') {
-//        displayAns('+');
-//      } else if (userInput === 'sub') {
-//        displayAns('-');
-//      } else if (userInput === 'multiply') {
-//        displayAns('X');
-//      } else if (userInput === 'divide') {
-//        displayAns('/');
-//      }
-//      //console.log('array is ' + arr);
-//    } else {
-//      displayAns(userInput);
-//      let num = parseInt(userInput);
-//      arr.unshift(num); // need to figure out how to add second number to second spot in array second num is currently first spot
-//      //console.log('ARRAY is ' + arr);
-//      //console.log('ARRAY length is ' + arr.length);
-//    }
-//  }
-//
   function displayAns(ans) {
     switch (ans) {
       case 'add':
@@ -106,7 +76,7 @@ let arr = [];
         display.textContent = '';
         break;
       case 'equal':
-        display.textContent = '';
+        display.textContent = `${runningTotal}`;
         break;
       default:
         display.textContent += `${ans}`;
@@ -120,42 +90,47 @@ let arr = [];
     displayAns('Input cleared');
     console.log(arr + arr.length);
   }
-  let numCount = 0;
+
   let numArray = [];
-  let operator;
+  let operator = [];
 
 
-  function saveInput(num) {
+  function saveInput(input) {
 
-    if (num === 'add' || num === 'sub' || num === 'multiply' || num === 'divide') {
-      numArray[numCount] = arr.join('');
-      operator = num;
-      console.log(numArray);
-      saveOperator(num);
-      numCount ++;
-      console.log(numCount);
-      clearArr();
-      console.log(arr);
-      return numArray;
-    } else if (num === 'equal') {
+    if (numArray < 2 && input != 'number') {
+      if (input === 'add' || input === 'sub' || input === 'multiply' || input === 'divide') {
+        numArray.push(arr.join(''));
+        saveOperator(input);
+        console.log(numArray);
+        console.log(arr);
+        clearArr();
+        return numArray;
+      }
+    }
+    if (input === 'equal') {
       numArray.push(arr.join(''));
       console.log(numArray);
-      numCount = 0;
-      calcAns(numArray, operator);
+      calcAns(numArray, input);
+      clearArr();
+    } else if (input === 'add' || input === 'sub' || input === 'multiply' || input === 'divide') {
+      numArray.push(arr.join(''));
+      let currentOperator = operator.shift();
+      calcAns(numArray, currentOperator);
     }
-    arr.push(num);
+    arr.push(input);
     console.log(arr);
   }
-
-
 
  function clearArr() {
    return arr = [];
  }
 
- function saveOperator(operator) {
-   return operator = operator;
+ function saveOperator(input) {
+   operator.push(input);
  }
+
+
+
 
  function calcAns(numArray, operator) {
    clearArr();
@@ -172,6 +147,9 @@ let arr = [];
     case 'divide':
       divide(numArray);
       break;
+    case 'equal':
+      displayAns(runningTotal);
+      break;      
     default:
       alert('ERROR ERROR ERROR');
    }
