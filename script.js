@@ -6,6 +6,7 @@ function addition(numArray) {
   ans = numArray.reduce((preValue, currentValue) => parseInt(preValue) + parseInt(currentValue));	
   displayAns(ans);
   console.log(ans);
+  clearNumArray();
   return runningTotal.push(ans);
 }
 
@@ -13,6 +14,7 @@ function substract(numArray) {
   ans = numArray.reduce((preValue, currentValue) => parseInt(preValue) - parseInt(currentValue));	
   displayAns(ans);
   console.log(ans);
+  clearNumArray();
   return runningTotal.push(ans);
 }
 
@@ -20,6 +22,7 @@ function multiply(numArray) {
   ans = numArray.reduce((preValue, currentValue) => parseInt(preValue) * parseInt(currentValue));	
   displayAns(ans);
   console.log(ans);
+  clearNumArray();
   return runningTotal.push(ans);
 }
 
@@ -27,6 +30,7 @@ function divide(numArray) {
   ans = numArray.reduce((preValue, currentValue) => parseInt(preValue) / parseInt(currentValue));	
   displayAns(ans);
   console.log(ans);
+  clearNumArray();
   return runningTotal.push(ans);
 }
 
@@ -80,19 +84,23 @@ function displayAns(ans) {
     case 'equal':
       display.textContent = `${runningTotal}`;
       break;
+    case 'clear':
+      display.textContent = '';
+      break;
     default:
       display.textContent += `${ans}`;
    }
 }
   
 function clearInput() {
-  arr = []
-  displayAns('Input cleared');
-  console.log(arr + arr.length);
+  clearArr();
+  clearTotal();
+  clearNumArray();
+  return displayAns('clear');
 }
 
 
-
+// if runningTotal is > 0, use runningTotal as first value
 
 function saveInput(input) {
   if (numArray < 2 && input != 'number') {
@@ -124,6 +132,15 @@ function saveInput(input) {
 function clearArr() {
   return arr = [];
 }
+
+function clearTotal() {
+  return runningTotal = [];
+}
+
+function clearNumArray() {
+  return numArray = [];
+}
+
 function saveOperator(input) {
   operator.push(input);
 }
