@@ -1,5 +1,5 @@
 let runningTotal;
-let numCount = 0;
+let numCount = 0; //needed alongside runningTotal to use multiple numbers and operators
 
 function addition(a,b) {
   ans = a + b;
@@ -33,7 +33,6 @@ function divide(a,b) {
 
 function operate(a, b, c) {
   clearCurrentNumber();
-
   if (c === 'add') {
     addition(a, b);
     return numCount += 1;
@@ -54,7 +53,7 @@ function operate(a, b, c) {
 const btns = document.querySelectorAll('button');
 const display = document.querySelector('.display');
 
-
+//needed to feed userInput into code. Pulls button.id and feeds into saveInput
 btns.forEach(button =>
   button.addEventListener('click', () => {
     if (button.id === 'clear') {
@@ -65,6 +64,7 @@ btns.forEach(button =>
     }
 }));
 
+//have to be global or they reset each time a function is called. 
 let currentInput = [];
 let currentNumber = [];
 let operator = []
@@ -100,12 +100,7 @@ function saveInput(userInput) {
   }
 }
 
-
-
-
-
-
-function displayAns(ans) {
+function displayAns(ans) { //Shows current input and answers in calculator display
   switch (ans) {
     case 'add':
       display.textContent = '';
