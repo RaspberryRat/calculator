@@ -74,24 +74,30 @@ function saveInput(userInput) {
   // if numCount < 1 then do create a, b,
   // if numCount > 0 then a
   if (userInput === 'add' || userInput === 'sub' || userInput === 'multiply' || userInput === 'divide') {
-    if (numCount > 0 || currentNumber.length > 1) {
-      if (numCount = 0) {
+    if (numCount > 0 || currentNumber.length > 0) {
+      if (numCount === 0) {
+        currentNumber.push(currentInput.join(''));
+        clearCurrentInput();
+        console.log(currentNumber);
         //take currentNumber[0] and [1] and push to operate,
         //take currentNumber[2] put into varible
         //clear currentNumber then add variable to currentNumber[0]
         //
-      } else if (numCount > 0 && currentNumber.length > 1) {
-        //take currentNumber[0] and [1] and push to operate,
-        //take currentNumber[2] put into varible
-        //clear currentNumber then add variable to currentNumber[0]
-        //then operate again with runningTotal?
-      } 
+        let num1 = parseInt(currentNumber[0]);
+        let num2 = parseInt(currentNumber[1]);
+        c = operator[0];
+        operate(num1, num2, c);
+        console.log(currentNumber);
 
-      currentNumber.push(currentInput.join(''));
-      console.log(currentNumber);
-      let num2 = parseInt(currentNumber[0]);
-      c = operator[0];
-      return operate(runningTotal, num2, c);
+      } else if (numCount > 0) {
+        console.log(currentNumber);
+        currentNumber.push(currentInput.join(''));
+        clearCurrentInput();
+        console.log(currentNumber);
+        let num2 = parseInt(currentNumber[0]);
+        c = operator[0];
+        return operate(runningTotal, num2, c);
+      }
     } else if (numCount === 0) {
       operator[0] = userInput;
       console.log(operator);
@@ -102,6 +108,7 @@ function saveInput(userInput) {
   } else if (userInput === 'equal') {
     if (numCount === 0) {
       currentNumber.push(currentInput.join(''));
+      clearCurrentInput();
       console.log(currentNumber);
       let num1 = parseInt(currentNumber[0]);
       let num2 = parseInt(currentNumber[1]);
@@ -109,6 +116,7 @@ function saveInput(userInput) {
       return operate(num1, num2, c);
     } else if (numCount > 0) {
       currentNumber.push(currentInput.join(''));
+      clearCurrentInput();
       console.log(currentNumber);
       let num2 = parseInt(currentNumber[0]);
       c = operator[0];
