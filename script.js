@@ -70,14 +70,6 @@ let currentNumber = [];
 let operator = []
 
 
-// when press calc number add to numArray and display on screen
-// when press first operator take numarray, put into a variable and clear numarray
-// repeat - when press calc number add to numArray and display on screen
-// when press operator again or press equal, take number1 and number2 with operator and pass to operate
-// then operate should take and put into runningTotal.
-// if runningTotal > 0, and press operator, use it as first number in calculation
-
-
 function saveInput(userInput) {
   // if numCount < 1 then do create a, b,
   // if numCount > 0 then a
@@ -154,5 +146,4 @@ function clearInput() {
 }
 
 
-// if runningTotal is > 0, use runningTotal as first value
 
