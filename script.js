@@ -1,43 +1,51 @@
-let runningTotal = [];
+let runningTotal;
+let numCount = 0;
 
 function addition(a,b) {
   ans = a + b;
-  displayAns(ans);
+  runningTotal = ans;
+  displayAns(equal);
   console.log(ans);
-  return runningTotal.push(ans);
+  console.log(numCount);
 }
 
 function substract(a,b) {
   ans = a - b;
   displayAns(ans);
+  runningTotal = ans;
   console.log(ans);
-  return runningTotal.push(ans);
 }
 
 function multiply(a,b) {
   ans = a * b;
   displayAns(ans);
+  runningTotal = ans;
   console.log(ans);
-  return runningTotal.push(ans);
 }
 
 function divide(a,b) {
   ans = a / b;
   displayAns(ans);
+  runningTotal = ans;
   console.log(ans);
-  return runningTotal.push(ans);
 }
 
 
 function operate(a, b, c) {
+  clearCurrentNumber();
+
   if (c === 'add') {
-    return addition(a, b);
+    addition(a, b);
+    return numCount += 1;
   } else if (c === 'sub') {
-    return substract(a, b);
+    substract(a, b);
+    return numCount += 1;
   } else if (c === 'multiply') {
-    return multiply(a,b);
+    multiply(a,b);
+    return numCount += 1;
   } else if (c === 'divide') {
-    return divide(a,b);
+    divide(a,b);
+    return numCount += 1;
   } else {
     return 'ERROR!'
   }
@@ -71,26 +79,29 @@ let operator = []
 
 
 function saveInput(userInput) {
-  let numCount = runningTotal.length;
-  console.log(numCount);
-  //if userinput is + - * / consolidate numArray, else add to numArray
+  // if numCount < 1 then do create a, b,
+  // if numCount > 0 then a
   if (userInput === 'add' || userInput === 'sub' || userInput === 'multiply' || userInput === 'divide') {
     operator[0] = userInput;
     console.log(operator);
     currentNumber.push(currentInput.join(''));
     console.log(currentNumber);
     clearCurrentInput();
-    
-
   } else if (userInput === 'equal') {
-    console.log(operator);
-
-    currentNumber.push(currentInput.join(''));
-    console.log(currentNumber);
-    let num1 = parseInt(currentNumber[0]);
-    let num2 = parseInt(currentNumber[1]);
-    c = operator[0];
-    return operate(num1, num2, c);
+    if (numCount === 0) {
+      currentNumber.push(currentInput.join(''));
+      console.log(currentNumber);
+      let num1 = parseInt(currentNumber[0]);
+      let num2 = parseInt(currentNumber[1]);
+      c = operator[0];
+      return operate(num1, num2, c);
+    } else if (numCount > 0) {
+      currentNumber.push(currentInput.join(''));
+      console.log(currentNumber);
+      let num2 = parseInt(currentNumber[0]);
+      c = operator[0];
+      return operate(runningTotal, num2, c);
+    }
   } else {
     currentInput.push(userInput);
     console.log(currentInput);
@@ -131,11 +142,15 @@ function clearCurrentInput() {
   return currentInput = [];
 }
 
+function clearCurrentNumber() {
+  return currentNumber = [];
+}
+
 function clearInput() {
-  clearArr();
-  clearTotal();
-  clearNumArray();
-  return displayAns('clear');
+  clearCurrentInput();
+  clearCurrentNumber();
+  displayAns('clear');
+  return runningTotal = 0;
 }
 
 
