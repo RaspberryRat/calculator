@@ -1,36 +1,30 @@
-//sCreate a new function operate that 
-//takes an operator and 2 numbers and then calls one of the above functions on the numbers.
 let runningTotal = [];
 
-function addition(numArray) {
-  ans = numArray.reduce((preValue, currentValue) => parseInt(preValue) + parseInt(currentValue));	
+function addition(a,b) {
+  ans = a + b;
   displayAns(ans);
   console.log(ans);
-  clearNumArray();
   return runningTotal.push(ans);
 }
 
-function substract(numArray) {
-  ans = numArray.reduce((preValue, currentValue) => parseInt(preValue) - parseInt(currentValue));	
+function substract(a,b) {
+  ans = a - b;
   displayAns(ans);
   console.log(ans);
-  clearNumArray();
   return runningTotal.push(ans);
 }
 
-function multiply(numArray) {
-  ans = numArray.reduce((preValue, currentValue) => parseInt(preValue) * parseInt(currentValue));	
+function multiply(a,b) {
+  ans = a * b;
   displayAns(ans);
   console.log(ans);
-  clearNumArray();
   return runningTotal.push(ans);
 }
 
-function divide(numArray) {
-  ans = numArray.reduce((preValue, currentValue) => parseInt(preValue) / parseInt(currentValue));	
+function divide(a,b) {
+  ans = a / b;
   displayAns(ans);
   console.log(ans);
-  clearNumArray();
   return runningTotal.push(ans);
 }
 
@@ -63,9 +57,50 @@ btns.forEach(button =>
     }
 }));
 
-let arr = [];
-let numArray = [];
-let operator = [];
+let currentInput = [];
+let currentNumber = [];
+let operator = []
+
+
+// when press calc number add to numArray and display on screen
+// when press first operator take numarray, put into a variable and clear numarray
+// repeat - when press calc number add to numArray and display on screen
+// when press operator again or press equal, take number1 and number2 with operator and pass to operate
+// then operate should take and put into runningTotal.
+// if runningTotal > 0, and press operator, use it as first number in calculation
+
+
+function saveInput(userInput) {
+  let numCount = runningTotal.length;
+  console.log(numCount);
+  //if userinput is + - * / consolidate numArray, else add to numArray
+  if (userInput === 'add' || userInput === 'sub' || userInput === 'multiply' || userInput === 'divide') {
+    operator[0] = userInput;
+    console.log(operator);
+    currentNumber.push(currentInput.join(''));
+    console.log(currentNumber);
+    clearCurrentInput();
+    
+
+  } else if (userInput === 'equal') {
+    console.log(operator);
+
+    currentNumber.push(currentInput.join(''));
+    console.log(currentNumber);
+    let num1 = parseInt(currentNumber[0]);
+    let num2 = parseInt(currentNumber[1]);
+    c = operator[0];
+    return operate(num1, num2, c);
+  } else {
+    currentInput.push(userInput);
+    console.log(currentInput);
+  }
+}
+
+
+
+
+
 
 function displayAns(ans) {
   switch (ans) {
@@ -91,7 +126,11 @@ function displayAns(ans) {
       display.textContent += `${ans}`;
    }
 }
-  
+
+function clearCurrentInput() {
+  return currentInput = [];
+}
+
 function clearInput() {
   clearArr();
   clearTotal();
@@ -102,88 +141,3 @@ function clearInput() {
 
 // if runningTotal is > 0, use runningTotal as first value
 
-function saveInput(input) {
-  if (numArray < 2 && input != 'number') {
-    if (input === 'add' || input === 'sub' || input === 'multiply' || input === 'divide') {
-      numArray.push(arr.join(''));
-      saveOperator(input);
-      console.log(numArray);
-      console.log(arr);
-      clearArr();
-      return numArray;
-    }
-  }
-  if (input === 'equal') {
-    numArray.push(arr.join(''));
-    let currentOperator = operator.shift();
-    console.log(numArray);
-    calcAns(numArray, currentOperator, equal);
-    clearArr();
-  } else if (input === 'add' || input === 'sub' || input === 'multiply' || input === 'divide') {
-    numArray.push(arr.join(''));
-    let currentOperator = operator.shift();
-    clearArr();
-    calcAns(numArray, currentOperator);
-  }
-  arr.push(input);
-  console.log(arr);
-}
-
-function clearArr() {
-  return arr = [];
-}
-
-function clearTotal() {
-  return runningTotal = [];
-}
-
-function clearNumArray() {
-  return numArray = [];
-}
-
-function saveOperator(input) {
-  operator.push(input);
-}
-
-function calcAns(numArray, operator, equal) {
-  clearArr();
-  if (equal) {
-    switch (operator) {
-      case 'add':
-       addition(numArray);
-       displayAns(runningTotal);
-       break;
-      case 'sub':
-        substract(numArray);
-        displayAns(runningTotal);
-        break;
-      case 'multiply':
-        multiply(numArray);
-        displayAns(runningTotal);
-        break;
-      case 'divide':
-        divide(numArray);
-        displayAns(runningTotal);
-        break;    
-      default:
-        alert('ERROR ERROR ERROR');
-    }
-    } else {
-    switch (operator) {
-      case 'add':
-       addition(numArray);
-       break;
-      case 'sub':
-        substract(numArray);
-        break;
-      case 'multiply':
-        multiply(numArray);
-        break;
-      case 'divide':
-        divide(numArray);
-        break;    
-      default:
-        alert('ERROR ERROR ERROR');
-    }
-  }
- }
