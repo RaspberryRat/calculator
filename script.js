@@ -133,28 +133,55 @@ function saveInput(userInput) {
 }
 
 function displayAns(ans) { //Shows current input and answers in calculator display
-  switch (ans) {
-    case 'add':
-      display.textContent = '';
-     break;
-    case 'sub':
-      display.textContent = '';
+  if (numCount === 0) {
+    switch (ans) {
+      case 'add':
+        display.textContent = '';
       break;
-    case 'multiply':
-      display.textContent = '';
+      case 'sub':
+        display.textContent = '';
+        break;
+      case 'multiply':
+        display.textContent = '';
+        break;
+      case 'divide':
+        display.textContent = '';
+        break;
+      case 'equal':
+        display.textContent = `${runningTotal}`;
+        break;
+      case 'clear':
+        display.textContent = '';
+        break;
+      default:
+        display.textContent += `${ans}`;
+    }
+  } else if (currentInput.length === 1) {
+    display.textContent = `${ans}`;
+  } else {
+    switch (ans) {
+      case 'add':
+        display.textContent = `${runningTotal}`;
       break;
-    case 'divide':
-      display.textContent = '';
-      break;
-    case 'equal':
-      display.textContent = `${runningTotal}`;
-      break;
-    case 'clear':
-      display.textContent = '';
-      break;
-    default:
-      display.textContent += `${ans}`;
-   }
+      case 'sub':
+        display.textContent = `${runningTotal}`;
+        break;
+      case 'multiply':
+        display.textContent = `${runningTotal}`;
+        break;
+      case 'divide':
+        display.textContent = `${runningTotal}`;
+        break;
+      case 'equal':
+        display.textContent = `${runningTotal}`;
+        break;
+      case 'clear':
+        display.textContent = '';
+        break;
+      default:
+        display.textContent += `${ans}`;
+    }
+  }
 }
 
 function clearCurrentInput() {
