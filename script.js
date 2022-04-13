@@ -1,10 +1,15 @@
 let runningTotal;
 let numCount = 0; //needed alongside runningTotal to use multiple numbers and operators
 
+
+const curNumDisp = document.querySelector('.currentNumber');
+const curRunTotalDis = document.querySelector('.runningTotal');
+const curInputDis = document.querySelector('.currentInput');
+
 function addition(a,b) {
   ans = a + b;
   runningTotal = ans;
-  displayAns(equal);
+  displayAns('equal');
   console.log(ans);
   console.log(numCount);
 }
@@ -18,15 +23,15 @@ function substract(a,b) {
 
 function multiply(a,b) {
   ans = a * b;
-  displayAns(ans);
   runningTotal = ans;
+  displayAns('equal');
   console.log(ans);
 }
 
 function divide(a,b) {
   ans = a / b;
-  displayAns(ans);
   runningTotal = ans;
+  displayAns('equal');
   console.log(ans);
 }
 
@@ -60,8 +65,11 @@ btns.forEach(button =>
       clearInput();
     } else {
       saveInput(button.id);
-      displayAns(button.id);
+      displayAns(button.id); 
     }
+    curNumDisp.textContent = currentNumber;
+    curRunTotalDis.textContent = runningTotal;
+    curInputDis.textContent = currentInput;
 }));
 
 //have to be global or they reset each time a function is called. 
@@ -71,61 +79,54 @@ let operator = []
 
 
 function saveInput(userInput) {
-  // if numCount < 1 then do create a, b,
-  // if numCount > 0 then a
   if (userInput === 'add' || userInput === 'sub' || userInput === 'multiply' || userInput === 'divide') {
-    if (numCount === 0) {
-      if (currentNumber.length === 0) {
-        currentNumber.push(currentInput.join(''));
-        clearCurrentInput();
-        return operator[0] = userInput;
-      } else if (currentNumber.length > 0) {
-        currentNumber.push(currentInput.join(''));
-        clearCurrentInput();
-        let num1 = parseInt(currentNumber[0]);
-        let num2 = parseInt(currentNumber[1]);
-        c = operator[0];
-        clearCurrentNumber();
-        operate(num1, num2, c);
-        return operator[0] = userInput;
-      }
-    } else if (numCount > 0) {
-      if (currentInput.length === 0) {
-        currentNumber.push(runningTotal);
-        return operator[0] = userInput; 
-      } else if (currentNumber.length === 0) {
-        currentNumber.push(currentInput.join(''));
-        clearCurrentInput();
-        return operator[0] = userInput;
-      } else if (currentNumber.length > 0) {
-        currentNumber.push(currentInput.join(''));
-        clearCurrentInput();
-        let num1 = parseInt(currentNumber[0]);
-        let num2 = parseInt(currentNumber[1]);
-        c = operator[0];
-        clearCurrentNumber();
-        operate(num1, num2, c);
-        return operator[0] = userInput;
-      }
-    } 
-  } else if (userInput === 'equal') {
-    if (numCount === 0) {
+    if (currentNumber.length != 0) {
       currentNumber.push(currentInput.join(''));
       clearCurrentInput();
       console.log(currentNumber);
       let num1 = parseInt(currentNumber[0]);
       let num2 = parseInt(currentNumber[1]);
-      clearCurrentNumber();
       c = operator[0];
+      clearCurrentNumber();
       operate(num1, num2, c);
-    } else if (numCount > 0) {
-      currentNumber.push(currentInput.join(''));
-      console.log(currentNumber);
-      let num2 = parseInt(currentNumber[0]);
-      clearCurrentNumber();
-      c = operator[0];
-      operate(runningTotal, num2, c);
+      return operator[0] = userInput;
+    } else if (currentNumber.length === 0) {
+      if (numCount === 0) {
+        currentNumber.push(currentInput.join(''));
+        console.log(currentNumber);
+        clearCurrentInput();
+        return operator[0] = userInput;
+      } else if (numCount > 0) {
+        if (currentInput.length != 0) {
+          currentNumber.push(currentInput.join(''));
+          clearCurrentInput();
+          console.log(currentNumber);
+          let num1 = runningTotal;
+          let num2 = parseInt(currentNumber[0]);
+          c = operator[0];
+          clearCurrentNumber();
+          operate(num1, num2, c);
+          return operator[0] = userInput;
+        }
+        currentNumber.push(runningTotal);
+        console.log(`runningTotal is ${runningTotal} and currentNumber is ${currentNumber}`);
+        clearCurrentInput();
+        return operator[0] = userInput;
+      }
     }
+  } else if (userInput === 'equal') {
+    if (currentNumber.length === 1 && currentInput.length != 0) {
+      currentNumber.push(currentInput.join(''));
+      clearCurrentInput();
+      console.log(currentNumber);
+      let num1 = parseInt(currentNumber[0]);
+      let num2 = parseInt(currentNumber[1]);
+      c = operator[0];
+      clearCurrentNumber();
+      operate(num1, num2, c);
+    } else if (currentInput.length === 0) {
+      clearCurrentInput();
+    }  
   } else {
     currentInput.push(userInput);
     console.log(currentInput);
@@ -133,44 +134,27 @@ function saveInput(userInput) {
 }
 
 function displayAns(ans) { //Shows current input and answers in calculator display
-  if (numCount === 0) {
-    switch (ans) {
-      case 'add':
-        display.textContent = '';
-      break;
-      case 'sub':
-        display.textContent = '';
-        break;
-      case 'multiply':
-        display.textContent = '';
-        break;
-      case 'divide':
-        display.textContent = '';
-        break;
-      case 'equal':
-        display.textContent = `${runningTotal}`;
-        break;
-      case 'clear':
-        display.textContent = '';
-        break;
-      default:
-        display.textContent += `${ans}`;
+  if (numCount > 0) {
+    if (ans === 'add' || ans === 'sub' || ans === 'multiply' || ans === 'divide' || ans === 'equal' || ans === 'clear') {
+      display.textContent = runningTotal;
+    } else if (currentInput.length === 1) {
+      display.textContent = ans;
+    } else {
+      display.textContent += `${ans}`;
     }
-  } else if (currentInput.length === 1) {
-    display.textContent = `${ans}`;
   } else {
     switch (ans) {
       case 'add':
-        display.textContent = `${runningTotal}`;
+        display.textContent = '';
       break;
       case 'sub':
-        display.textContent = `${runningTotal}`;
+        display.textContent = '';
         break;
       case 'multiply':
-        display.textContent = `${runningTotal}`;
+        display.textContent = '';
         break;
       case 'divide':
-        display.textContent = `${runningTotal}`;
+        display.textContent = '';
         break;
       case 'equal':
         display.textContent = `${runningTotal}`;
