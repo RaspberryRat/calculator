@@ -85,16 +85,19 @@ function saveInput(userInput) {
         c = operator[0];
         operate(num1, num2, c);
         console.log(currentNumber);
-
-      } else if (numCount > 0) {
+      } else if (numCount > 0 && userInput.length === 0) { //used after pressing = and want to computer new value with prev answer
+        console.log(operator);
+        currentNumber[0] = runningTotal;
         console.log(currentNumber);
+      } else if (numCount > 0 && userInput.length > 0) {
         currentNumber.push(currentInput.join(''));
         clearCurrentInput();
         console.log(currentNumber);
-        let num2 = parseInt(currentNumber[0]);
+        let num2 = currentNumber[0];
         c = operator[0];
-        return operate(runningTotal, num2, c);
+        operate(runningTotal, num2, c);
       }
+
     } else if (numCount === 0) {
       console.log(operator);
       currentNumber.push(currentInput.join(''));
@@ -109,13 +112,13 @@ function saveInput(userInput) {
       let num1 = parseInt(currentNumber[0]);
       let num2 = parseInt(currentNumber[1]);
       c = operator[0];
-      return operate(num1, num2, c);
+      operate(num1, num2, c);
     } else if (numCount > 0) {
       currentNumber.push(currentInput.join(''));
       console.log(currentNumber);
       let num2 = parseInt(currentNumber[0]);
       c = operator[0];
-      return operate(runningTotal, num2, c);
+      operate(runningTotal, num2, c);
     }
   } else {
     currentInput.push(userInput);
