@@ -115,16 +115,22 @@ function saveInput(userInput) {
       }
     }
   } else if (userInput === 'equal') {
-    if (currentNumber.length === 1 && currentInput.length != 0) {
+    if (numCount != 0) {
+      let num2 = parseInt(currentInput.join(''));
+      let num1 = runningTotal;
+      clearCurrentInput();
+      c = operator[0];
+      clearCurrentNumber();
+      operate(num1, num2, c);
+    } else if (currentNumber.length === 1) {
       currentNumber.push(currentInput.join(''));
       clearCurrentInput();
-      console.log(currentNumber);
       let num1 = parseInt(currentNumber[0]);
       let num2 = parseInt(currentNumber[1]);
       c = operator[0];
       clearCurrentNumber();
       operate(num1, num2, c);
-    } else if (currentInput.length === 0) {
+    } else {
       clearCurrentInput();
     }  
   } else {
