@@ -74,36 +74,40 @@ function saveInput(userInput) {
   // if numCount < 1 then do create a, b,
   // if numCount > 0 then a
   if (userInput === 'add' || userInput === 'sub' || userInput === 'multiply' || userInput === 'divide') {
-    operator[0] = userInput;
-    if (numCount > 0 || currentNumber.length > 0) {
-      if (numCount === 0) {
+    if (numCount === 0) {
+      if (currentNumber.length === 0) {
         currentNumber.push(currentInput.join(''));
         clearCurrentInput();
-        console.log(currentNumber);
+        return operator[0] = userInput;
+      } else if (currentNumber.length > 0) {
+        currentNumber.push(currentInput.join(''));
+        clearCurrentInput();
         let num1 = parseInt(currentNumber[0]);
         let num2 = parseInt(currentNumber[1]);
         c = operator[0];
+        clearCurrentNumber();
         operate(num1, num2, c);
-        console.log(currentNumber);
-      } else if (numCount > 0 && userInput.length === 0) { //used after pressing = and want to computer new value with prev answer
-        console.log(operator);
-        currentNumber[0] = runningTotal;
-        console.log(currentNumber);
-      } else if (numCount > 0 && userInput.length > 0) {
+        return operator[0] = userInput;
+      }
+    } else if (numCount > 0) {
+      if (currentInput.length === 0) {
+        currentNumber.push(runningTotal);
+        return operator[0] = userInput; 
+      } else if (currentNumber.length === 0) {
         currentNumber.push(currentInput.join(''));
         clearCurrentInput();
-        console.log(currentNumber);
-        let num2 = currentNumber[0];
+        return operator[0] = userInput;
+      } else if (currentNumber.length > 0) {
+        currentNumber.push(currentInput.join(''));
+        clearCurrentInput();
+        let num1 = parseInt(currentNumber[0]);
+        let num2 = parseInt(currentNumber[1]);
         c = operator[0];
-        operate(runningTotal, num2, c);
+        clearCurrentNumber();
+        operate(num1, num2, c);
+        return operator[0] = userInput;
       }
-
-    } else if (numCount === 0) {
-      console.log(operator);
-      currentNumber.push(currentInput.join(''));
-      console.log(currentNumber);
-      clearCurrentInput();
-    }
+    } 
   } else if (userInput === 'equal') {
     if (numCount === 0) {
       currentNumber.push(currentInput.join(''));
@@ -111,12 +115,14 @@ function saveInput(userInput) {
       console.log(currentNumber);
       let num1 = parseInt(currentNumber[0]);
       let num2 = parseInt(currentNumber[1]);
+      clearCurrentNumber();
       c = operator[0];
       operate(num1, num2, c);
     } else if (numCount > 0) {
       currentNumber.push(currentInput.join(''));
       console.log(currentNumber);
       let num2 = parseInt(currentNumber[0]);
+      clearCurrentNumber();
       c = operator[0];
       operate(runningTotal, num2, c);
     }
