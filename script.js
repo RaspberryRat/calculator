@@ -79,8 +79,8 @@ let operator = []
 
 
 function saveInput(userInput) {
-  if (userInput === 'add' || userInput === 'sub' || userInput === 'multiply' || userInput === 'divide') {
-    if (currentNumber.length != 0) {
+  if (userInput === 'add' || userInput === 'sub' || userInput === 'multiply' || userInput === 'divide') { 
+    if (currentNumber.length != 0) { //add error handling for double input of operators
       currentNumber.push(currentInput.join(''));
       clearCurrentInput();
       console.log(currentNumber);
