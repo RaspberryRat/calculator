@@ -5,6 +5,8 @@ let numCount = 0; //needed alongside runningTotal to use multiple numbers and op
 const curNumDisp = document.querySelector('.currentNumber');
 const curRunTotalDis = document.querySelector('.runningTotal');
 const curInputDis = document.querySelector('.currentInput');
+const operatorDis = document.querySelector('.operator');
+const userInputDis = document.querySelector('.userInput');
 
 function addition(a,b) {
   ans = a + b;
@@ -70,51 +72,57 @@ btns.forEach(button =>
     curNumDisp.textContent = currentNumber;
     curRunTotalDis.textContent = runningTotal;
     curInputDis.textContent = currentInput;
+    operatorDis.textContent = operator;
 }));
 
 //have to be global or they reset each time a function is called. 
 let currentInput = [];
 let currentNumber = [];
-let operator = []
+let operator = [];
 
 
 function saveInput(userInput) {
-  if (userInput === 'add' || userInput === 'sub' || userInput === 'multiply' || userInput === 'divide') { 
-    if (currentNumber.length != 0) { //add error handling for double input of operators
-      currentNumber.push(currentInput.join(''));
-      clearCurrentInput();
-      console.log(currentNumber);
-      let num1 = parseInt(currentNumber[0]);
-      let num2 = parseInt(currentNumber[1]);
-      c = operator[0];
-      clearCurrentNumber();
-      operate(num1, num2, c);
+  
+  if (userInput === 'add' || userInput === 'sub' || userInput === 'multiply' || userInput === 'divide') {
+    if (currentInput.length === 0) {
       return operator[0] = userInput;
-    } else if (currentNumber.length === 0) {
-      if (numCount === 0) {
+    } else {
+      if (currentNumber.length != 0) { //checks if there is a number already in the array, if there is do math on number with current input
         currentNumber.push(currentInput.join(''));
-        console.log(currentNumber);
         clearCurrentInput();
+        console.log(currentNumber);
+        let num1 = parseInt(currentNumber[0]);
+        let num2 = parseInt(currentNumber[1]);
+        c = operator[0];
+        clearCurrentNumber();
+        operate(num1, num2, c);
         return operator[0] = userInput;
-      } else if (numCount > 0) {
-        if (currentInput.length != 0) {
+      } else if (currentNumber.length === 0) { 
+        if (numCount === 0) { //this checks if any operation has been saved previously, if not saves number and operator
           currentNumber.push(currentInput.join(''));
-          clearCurrentInput();
           console.log(currentNumber);
-          let num1 = runningTotal;
-          let num2 = parseInt(currentNumber[0]);
-          c = operator[0];
-          clearCurrentNumber();
-          operate(num1, num2, c);
+          clearCurrentInput();
+          return operator[0] = userInput;
+        } else if (numCount > 0) { //checks if there is a previous input
+          if (currentInput.length != 0) { //does operation with current saved number and runningTotal(sum) and saves new operator to continue equation
+            currentNumber.push(currentInput.join(''));
+            clearCurrentInput();
+            console.log(currentNumber);
+            let num1 = runningTotal;
+            let num2 = parseInt(currentNumber[0]);
+            c = operator[0];
+            clearCurrentNumber();
+            operate(num1, num2, c);
+            return operator[0] = userInput;
+          }
+          currentNumber.push(runningTotal); 
+          console.log(`runningTotal is ${runningTotal} and currentNumber is ${currentNumber}`);
+          clearCurrentInput();
           return operator[0] = userInput;
         }
-        currentNumber.push(runningTotal);
-        console.log(`runningTotal is ${runningTotal} and currentNumber is ${currentNumber}`);
-        clearCurrentInput();
-        return operator[0] = userInput;
       }
     }
-  } else if (userInput === 'equal') {
+  } else if (userInput === 'equal') { //same operations for operators but for equal
     if (numCount != 0) {
       let num2 = parseInt(currentInput.join(''));
       let num1 = runningTotal;
@@ -140,7 +148,7 @@ function saveInput(userInput) {
 }
 
 function displayAns(ans) { //Shows current input and answers in calculator display
-  if (numCount > 0) {
+  if (numCount > 0) { //needs to properly display runningTotal after each operator
     if (ans === 'add' || ans === 'sub' || ans === 'multiply' || ans === 'divide' || ans === 'equal' || ans === 'clear') {
       display.textContent = runningTotal;
     } else if (currentInput.length === 1) {
