@@ -33,8 +33,8 @@ function multiply(a,b) {
 function divide(a,b) {
   ans = a / b;
   runningTotal = ans;
-  displayAns('equal');
-  console.log(ans);
+   displayAns('equal');
+  console.log(ans);  
 }
 
 
@@ -82,7 +82,6 @@ let operator = [];
 
 
 function saveInput(userInput) {
-  
   if (userInput === 'add' || userInput === 'sub' || userInput === 'multiply' || userInput === 'divide') {
     if (currentInput.length === 0) {
       return operator[0] = userInput;
@@ -127,20 +126,34 @@ function saveInput(userInput) {
       return;
     } else { 
       if (numCount != 0) {
-        let num2 = parseInt(currentInput.join(''));
-        let num1 = runningTotal;
-        clearCurrentInput();
-        c = operator[0];
-        clearCurrentNumber();
-        operate(num1, num2, c);
+        if (parseInt(currentInput.join('')) === 0) {
+          console.log('hi');
+          clearCurrentInput();
+          displayAns('destruct');
+          return userInput = null;
+        } else {
+          let num2 = parseInt(currentInput.join(''));
+          let num1 = runningTotal;
+          clearCurrentInput();
+          c = operator[0];
+          clearCurrentNumber();
+          operate(num1, num2, c);
+        }
       } else if (currentNumber.length === 1) {
-        currentNumber.push(currentInput.join(''));
-        clearCurrentInput();
-        let num1 = parseInt(currentNumber[0]);
-        let num2 = parseInt(currentNumber[1]);
-        c = operator[0];
-        clearCurrentNumber();
-        operate(num1, num2, c);
+        if (parseInt(currentInput.join('')) === 0) {
+          console.log('hi');
+          clearCurrentInput();
+          displayAns('destruct');
+          return userInput = null;
+        } else {
+          currentNumber.push(currentInput.join(''));
+          clearCurrentInput();
+          let num1 = parseInt(currentNumber[0]);
+          let num2 = parseInt(currentNumber[1]);
+          c = operator[0];
+          clearCurrentNumber();
+          operate(num1, num2, c);
+        }
       } else {
         clearCurrentInput();
       }
@@ -152,38 +165,43 @@ function saveInput(userInput) {
 }
 
 function displayAns(ans) { //Shows current input and answers in calculator display
-  if (numCount > 0) { //needs to properly display runningTotal after each operator
-    if (ans === 'add' || ans === 'sub' || ans === 'multiply' || ans === 'divide' || ans === 'equal' || ans === 'clear') {
-      display.textContent = runningTotal;
-    } else if (currentInput.length === 1) {
-      display.textContent = ans;
-    } else {
-      display.textContent += `${ans}`;
-    }
-  } else {
-    switch (ans) {
-      case 'add':
-        display.textContent = '';
-      break;
-      case 'sub':
-        display.textContent = '';
-        break;
-      case 'multiply':
-        display.textContent = '';
-        break;
-      case 'divide':
-        display.textContent = '';
-        break;
-      case 'equal':
-        display.textContent = `${runningTotal}`;
-        break;
-      case 'clear':
-        display.textContent = '';
-        break;
-      default:
+  //if (ans === 'destruct') {//user tried to divde by 0
+  //  display.textContent = 'Universe will explode in 3...';
+  //  return;
+  if (ans === 'clear') {
+      display.textContent = '';
+    } else if (numCount > 0) { //needs to properly display runningTotal after each operator
+      if (ans === 'add' || ans === 'sub' || ans === 'multiply' || ans === 'divide' || ans === 'equal' || ans === 'clear') {
+        display.textContent = Math.round(runningTotal * 100) / 100; //rounds answer to 2 decimal
+      } else if (currentInput.length === 1) {
+        display.textContent = ans;
+      } else {
         display.textContent += `${ans}`;
+      }
+    } else {
+      switch (ans) {
+        case 'destruct':
+          display.textContent = 'unverse';
+          break;
+         case 'add':
+          display.textContent = '';
+        break;
+        case 'sub':
+          display.textContent = '';
+          break;
+        case 'multiply':
+          display.textContent = '';
+          break;
+        case 'divide':
+          display.textContent = '';
+          break;
+        case 'equal':
+          display.textContent = Math.round(runningTotal * 100) / 100; //rounds 2 decimal 
+          break;
+        default:
+          display.textContent += `${ans}`;
+      }
     }
-  }
 }
 
 function clearCurrentInput() {
@@ -199,7 +217,7 @@ function clearInput() {
   clearCurrentNumber();
   displayAns('clear');
   numCount = 0;
-  return runningTotal = 0;
+  return runningTotal = null;
 }
 
 
