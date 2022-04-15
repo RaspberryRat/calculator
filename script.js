@@ -1,7 +1,7 @@
 let runningTotal;
 let numCount = 0; //needed alongside runningTotal to use multiple numbers and operators
 let divideByZero = 0;
-
+//testing change remove comment
 function addition(a,b) {
   ans = a + b;
   runningTotal = ans;
