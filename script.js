@@ -123,6 +123,8 @@ function saveInput(userInput) {
       }
     }
   } else if (userInput === 'equal') { //same operations for operators but for equal
+    addHistoryDisplay(currentInput.join(''));
+    addHistoryDisplay(userInput);
     if (currentInput.length === 0) {
       return;
     } else { 
@@ -200,6 +202,7 @@ function clearInput() {
   clearCurrentInput();
   clearCurrentNumber();
   displayAns('clear');
+  addHistoryDisplay('clear');
   numCount = 0;
   return runningTotal = null;
 }
@@ -213,12 +216,16 @@ function addHistoryDisplay(input) {
       input = '-';
       break;
     case 'multiply':
+      input = '*';
       break;
     case 'divide':
       input = '/';
       break;
     case 'equal':
-      input = '';
+      input = 'clear';
+      break;
+    case 'clear':
+      input = 'clear';
       break;
     case undefined:
       input = '';
@@ -226,5 +233,9 @@ function addHistoryDisplay(input) {
     default:
       input = input;
   }
-  historyDisplay.textContent += `${input} `;
+  if (input === 'clear') {
+    historyDisplay.textContent = '';
+  } else {
+    historyDisplay.textContent += `${input} `;
+  }
 }
