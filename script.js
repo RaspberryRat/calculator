@@ -58,6 +58,7 @@ function operate(a, b, c) {
 const btns = document.querySelectorAll('button');
 const display = document.querySelector('.display');
 const historyDisplay = document.querySelector('.display-history');
+const decimalBtn = document.getElementById('decimal');
 
 //needed to feed userInput into code. Pulls button.id and feeds into saveInput
 btns.forEach(button =>
@@ -69,7 +70,8 @@ btns.forEach(button =>
       if (divideByZero === 1) {
         return divideByZero = 0;
       } else {
-      displayAns(button.id); 
+      displayAns(button.id);
+      checkDecimal();
       }
     }
 }));
@@ -146,7 +148,9 @@ function saveInput(userInput) {
       } else {
         clearCurrentInput();
       }
-    }  
+    }
+  } else if (userInput === 'decimal') {
+    currentInput.push('.');  
   } else {
     currentInput.push(userInput);
     console.log(currentInput);
@@ -184,6 +188,9 @@ function displayAns(ans) { //Shows current input and answers in calculator displ
           case 'equal':
             display.textContent = Math.round(runningTotal * 100) / 100; //rounds 2 decimal 
             break;
+          case 'decimal':
+            display.textContent += '.';
+            break;
           default:
             display.textContent += `${ans}`;
         }
@@ -216,10 +223,10 @@ function addHistoryDisplay(input) {
       input = '-';
       break;
     case 'multiply':
-      input = '*';
+      input = '×';
       break;
     case 'divide':
-      input = '/';
+      input = '÷';
       break;
     case 'equal':
       input = 'clear';
@@ -245,4 +252,14 @@ function countdown() {
   setTimeout(() => display.textContent += '2...', 1000);
   setTimeout(() => display.textContent += '1!', 2000);
   setTimeout(() => clearInput(), 3200);
+}
+
+function checkDecimal() {
+  if (currentInput.includes('.')) {
+    console.log('yes');
+    decimalBtn.disabled = true;
+  } else {
+    decimalBtn.disabled = false;
+    console.log('no');
+  }
 }
