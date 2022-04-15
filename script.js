@@ -65,6 +65,9 @@ btns.forEach(button =>
   button.addEventListener('click', () => {
     if (button.id === 'clear') {
       clearInput();
+    } else if (button.id === 'del') {
+      currentInput.pop();
+      deleteLastNumber();
     } else {
       saveInput(button.id);
       if (divideByZero === 1) {
@@ -160,7 +163,7 @@ function saveInput(userInput) {
 function displayAns(ans) { //Shows current input and answers in calculator display
   if (ans === 'destruct') {//user tried to divde by 0
     countdown();
-    return;
+    return;  
   } else if (ans === 'clear') {
         display.textContent = '';
       } else if (numCount > 0) { //needs to properly display runningTotal after each operator
@@ -256,10 +259,15 @@ function countdown() {
 
 function checkDecimal() {
   if (currentInput.includes('.')) {
-    console.log('yes');
     decimalBtn.disabled = true;
   } else {
     decimalBtn.disabled = false;
-    console.log('no');
   }
+}
+
+function deleteLastNumber() {
+  let currentDisplay = display.textContent;
+  console.log(currentDisplay);
+  let lastInputRemoved = currentDisplay.slice(0,-1);
+  display.textContent = lastInputRemoved;
 }
