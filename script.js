@@ -2,13 +2,6 @@ let runningTotal;
 let numCount = 0; //needed alongside runningTotal to use multiple numbers and operators
 let divideByZero = 0;
 
-
-const curNumDisp = document.querySelector('.currentNumber');
-const curRunTotalDis = document.querySelector('.runningTotal');
-const curInputDis = document.querySelector('.currentInput');
-const operatorDis = document.querySelector('.operator');
-const userInputDis = document.querySelector('.userInput');
-
 function addition(a,b) {
   ans = a + b;
   runningTotal = ans;
@@ -43,7 +36,6 @@ function divide(a,b) {
   }
 }
 
-
 function operate(a, b, c) {
   clearCurrentNumber();
   if (c === 'add') {
@@ -65,6 +57,7 @@ function operate(a, b, c) {
 
 const btns = document.querySelectorAll('button');
 const display = document.querySelector('.display');
+const histroyDisplay = document.querySelector('.history-display');
 
 //needed to feed userInput into code. Pulls button.id and feeds into saveInput
 btns.forEach(button =>
@@ -79,10 +72,6 @@ btns.forEach(button =>
       displayAns(button.id); 
       }
     }
-    curNumDisp.textContent = currentNumber;
-    curRunTotalDis.textContent = runningTotal;
-    curInputDis.textContent = currentInput;
-    operatorDis.textContent = operator;
 }));
 
 //have to be global or they reset each time a function is called. 
@@ -98,6 +87,7 @@ function saveInput(userInput) {
     } else {
       if (currentNumber.length != 0) { //checks if there is a number already in the array, if there is do math on number with current input
         currentNumber.push(currentInput.join(''));
+        addHistoryDisplay(currentInput[1]);
         clearCurrentInput();
         console.log(currentNumber);
         let num1 = parseInt(currentNumber[0]);
@@ -109,12 +99,14 @@ function saveInput(userInput) {
       } else if (currentNumber.length === 0) { 
         if (numCount === 0) { //this checks if any operation has been saved previously, if not saves number and operator
           currentNumber.push(currentInput.join(''));
+          addHistoryDisplay(currentInput[0]);
           console.log(currentNumber);
           clearCurrentInput();
           return operator[0] = userInput;
         } else if (numCount > 0) { //checks if there is a previous input
           if (currentInput.length != 0) { //does operation with current saved number and runningTotal(sum) and saves new operator to continue equation
             currentNumber.push(currentInput.join(''));
+            addHistoryDisplay(currentInput[1]);
             clearCurrentInput();
             console.log(currentNumber);
             let num1 = runningTotal;
@@ -125,7 +117,6 @@ function saveInput(userInput) {
             return operator[0] = userInput;
           }
           currentNumber.push(runningTotal); 
-          console.log(`runningTotal is ${runningTotal} and currentNumber is ${currentNumber}`);
           clearCurrentInput();
           return operator[0] = userInput;
         }
@@ -137,6 +128,7 @@ function saveInput(userInput) {
     } else { 
       if (numCount != 0) {
         let num2 = parseInt(currentInput.join(''));
+        addHistoryDisplay(num2);
         let num1 = runningTotal;
         clearCurrentInput();
         c = operator[0];
@@ -144,6 +136,7 @@ function saveInput(userInput) {
         operate(num1, num2, c);
       } else if (currentNumber.length === 1) {
         currentNumber.push(currentInput.join(''));
+        addHistoryDisplay(currentInput[1]);
         clearCurrentInput();
         let num1 = parseInt(currentNumber[0]);
         let num2 = parseInt(currentNumber[1]);
@@ -213,5 +206,6 @@ function clearInput() {
   return runningTotal = null;
 }
 
-
-
+function addHistoryDisplay(input) {
+  histroyDisplay.textContent += `${input} `;
+}
