@@ -155,7 +155,7 @@ function saveInput(userInput) {
 
 function displayAns(ans) { //Shows current input and answers in calculator display
   if (ans === 'destruct') {//user tried to divde by 0
-    display.textContent = 'Universe will explode in 3...';
+    countdown();
     return;
   } else if (ans === 'clear') {
         display.textContent = '';
@@ -238,4 +238,11 @@ function addHistoryDisplay(input) {
   } else {
     historyDisplay.textContent += `${input} `;
   }
+}
+
+function countdown() {
+  display.textContent = 'Universe will explode in 3...';
+  setTimeout(() => display.textContent += '2...', 1000);
+  setTimeout(() => display.textContent += '1!', 2000);
+  setTimeout(() => clearInput(), 3200);
 }
