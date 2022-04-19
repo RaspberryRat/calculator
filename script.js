@@ -63,20 +63,70 @@ const decimalBtn = document.getElementById('decimal');
 //needed to feed userInput into code. Pulls button.id and feeds into saveInput
 btns.forEach(button =>
   button.addEventListener('click', () => {
-    if (button.id === 'clear') {
-      clearInput();
-    } else if (button.id === 'del') {
-      deleteLastNumber();
-    } else {
-      saveInput(button.id);
-      if (divideByZero === 1) {
-        return divideByZero = 0;
-      } else {
-      displayAns(button.id);
-      checkDecimal();
-      }
-    }
+    passInput(button.id);
 }));
+
+window.addEventListener('keydown', function(e) {
+  let possibleInputs = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '+', '*', '-', '/', '=', 
+  'Backspace', 'Delete', 'Enter'];
+  let keyPressed;
+  if (possibleInputs.includes(e.key)) {
+    switch (e.key) {
+      case '+':
+        keyPressed = 'add';
+        break;
+      case '-':
+        keyPressed = 'sub';
+        break;
+      case '*':
+        keyPressed = 'multiply';
+        break;
+      case '/':
+        keyPressed = 'divide';
+        break;
+      case '=':
+        keyPressed = 'equal';
+        break;
+      case 'Enter':
+        keyPressed = 'equal';
+        break;
+      case 'Backspace':
+        keyPressed = 'del';
+        break;
+      case 'Delete':
+        keyPressed = 'clear';
+        break;
+      default:
+        keyPressed = e.key;
+    }
+    passInput(keyPressed);
+  }
+});
+
+function passInput(userInput) {
+  console.log(userInput);
+  if (userInput === 'clear') {
+    clearInput();
+  } else if (userInput === 'del') {
+    deleteLastNumber();
+  } else {
+    saveInput(userInput);
+    if (divideByZero === 1) {
+      return divideByZero = 0;
+    } else {
+    displayAns(userInput);
+    checkDecimal();
+    }
+  }
+}
+
+
+
+
+function keyPress(e) {
+  const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+  console.log(key);
+}
 
 //have to be global or they reset each time a function is called. 
 let currentInput = [];
