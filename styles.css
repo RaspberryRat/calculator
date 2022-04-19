@@ -2,18 +2,40 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
   font-size: 24px;
+}
+
+@font-face {
+  font-family: 'digitalFont';
+  src: url('./misc/digital-7-font/Digital7-1e1Z.ttf');
+  src: url('./misc/digital-7-font/Digital7Monoitalic-8xKz.ttf') format('truetype'),
+       url('./misc/digital-7-font/Digital7Mono-B1g5.ttf') format('truetype'),
+       url('./misc/digital-7-font/Digital7Italic-RBM3.ttf') format('truetype'),
+       url('./misc/digital-7-font/Digital7-1e1Z.ttf') format('truetype');
 }
 
 .container {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
   height: 100vh;
   background-color: #e8e8e8;
 }
+
+.header,
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #E27D60;
+  width: 100%;
+  padding: 15px;
+  color: #3a3734;
+}
+
 
 .calc-container {
   border: 2px black dotted;
@@ -25,6 +47,7 @@
   width: 400px;
   background-color: #292d37;
   border-radius: 8px;
+  flex-shrink: 0;
 }
 
 .btn-container {
@@ -65,16 +88,14 @@ button {
   align-items: flex-end;
   justify-content: flex-end;
   margin-bottom: 30px;
-  font-size: 50px;
+  font-size: 50px; 
 }
 
 .display,
 .display-history {
   color: #dee3e8;
   background-color: #595959;
-  font-family: "Segment7Standard";
-  font-weight: normal; 
-  font-style: italic; 
+  font-family: 'digitalFont';
   -webkit-box-shadow: 0px 0px 1px 1px #000;
   -moz-box-shadow:    0px 0px 1px 1px #000;
   box-shadow:         0px 1px 0px 0px #000;
@@ -108,4 +129,9 @@ button {
 
 #clear {
   color: #5d9d9a;
+}
+
+button:hover {
+  background-color: #a0a9ca;
+  box-shadow: 0px;
 }
