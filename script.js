@@ -6,22 +6,18 @@ function addition(a,b) {
   ans = a + b;
   runningTotal = ans;
   displayAns('equal');
-  console.log(ans);
-  console.log(firstOperation);
 }
 
 function substract(a,b) {
   ans = a - b;
   displayAns(ans);
   runningTotal = ans;
-  console.log(ans);
 }
 
 function multiply(a,b) {
   ans = a * b;
   runningTotal = ans;
   displayAns('equal');
-  console.log(ans);
 }
 
 function divide(a,b) {
@@ -32,7 +28,6 @@ function divide(a,b) {
     ans = a / b;
     runningTotal = ans;
     displayAns('equal');
-    console.log(ans);  
   }
 }
 
@@ -104,7 +99,6 @@ window.addEventListener('keydown', function(e) {
 });
 
 function passInput(userInput) {
-  console.log(userInput);
   if (userInput === 'clear') {
     clearInput();
   } else if (userInput === 'del') {
@@ -125,7 +119,6 @@ function passInput(userInput) {
 
 function keyPress(e) {
   const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
-  console.log(key);
 }
 
 //have to be global or they reset each time a function is called. 
@@ -146,9 +139,8 @@ function saveInput(userInput) {
       } else {
         if (currentNumber.length != 0) { //checks if there is a number already in the array, if there is do math on number with current input
           currentNumber.push(currentInput.join(''));
-          addHistoryDisplay(currentInput[1]);
+          //addHistoryDisplay(currentInput[1]);
           clearCurrentInput();
-          console.log(currentNumber);
           let num1 = parseInt(currentNumber[0]);
           let num2 = parseInt(currentNumber[1]);
           c = operator[0];
@@ -158,14 +150,12 @@ function saveInput(userInput) {
         } else if (currentNumber.length === 0) { 
           if (firstOperation === 0) { //this checks if any operation has been saved previously, if not saves number and operator
             currentNumber.push(currentInput.join(''));
-            console.log(currentNumber);
             clearCurrentInput();
             return operator[0] = userInput;
           } else if (firstOperation === 1) { //checks if there is a previous input
             if (currentInput.length != 0) { //does operation with current saved number and runningTotal(sum) and saves new operator to continue equation
               currentNumber.push(currentInput.join(''));
               clearCurrentInput();
-              console.log(currentNumber);
               let num1 = runningTotal;
               let num2 = parseInt(currentNumber[0]);
               c = operator[0];
@@ -209,7 +199,6 @@ function saveInput(userInput) {
     currentInput.push('.');  
   } else {
     currentInput.push(userInput);
-    console.log(currentInput);
   }
 }
 
@@ -325,7 +314,6 @@ function checkDecimal() {
 
 function deleteLastNumber() {
   let currentDisplay = display.textContent;
-  console.log(currentDisplay);
   let lastInputRemoved = currentDisplay.slice(0,-1);
   display.textContent = lastInputRemoved;
 }
