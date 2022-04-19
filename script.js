@@ -62,8 +62,11 @@ btns.forEach(button =>
 }));
 
 window.addEventListener('keydown', function(e) {
+  if (e.key === '.' && currentInput.includes('.')) {
+    return e.key = 'not.'
+  }
   let possibleInputs = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '+', '*', '-', '/', '=', 
-  'Backspace', 'Delete', 'Enter'];
+  'Backspace', 'Delete', 'Enter', '.'];
   let keyPressed;
   if (possibleInputs.includes(e.key)) {
     switch (e.key) {
@@ -91,11 +94,15 @@ window.addEventListener('keydown', function(e) {
       case 'Delete':
         keyPressed = 'clear';
         break;
+        case '.':
+          keyPressed = 'decimal'
       default:
         keyPressed = e.key;
     }
+    console.log(keyPressed)
     passInput(keyPressed);
   }
+  
 });
 
 function passInput(userInput) {
@@ -113,8 +120,6 @@ function passInput(userInput) {
     }
   }
 }
-
-
 
 
 function keyPress(e) {
