@@ -66,6 +66,10 @@ button {
   align-self: flex-start;
   width: 390px;
   height: 25px;
+  /*display: block;
+  overflow: hidden;
+  white-space: nowrap;*/
+
 }
 
 #clear {

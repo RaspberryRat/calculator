@@ -1,5 +1,5 @@
 let runningTotal;
-let numCount = 0; //needed alongside runningTotal to use multiple numbers and operators
+let firstOperation = 0; //needed alongside runningTotal to use multiple numbers and operators
 let divideByZero = 0;
 
 function addition(a,b) {
@@ -7,7 +7,7 @@ function addition(a,b) {
   runningTotal = ans;
   displayAns('equal');
   console.log(ans);
-  console.log(numCount);
+  console.log(firstOperation);
 }
 
 function substract(a,b) {
@@ -40,16 +40,16 @@ function operate(a, b, c) {
   clearCurrentNumber();
   if (c === 'add') {
     addition(a, b);
-    return numCount += 1;
+    return firstOperation = 1;
   } else if (c === 'sub') {
     substract(a, b);
-    return numCount += 1;
+    return firstOperation = 1;
   } else if (c === 'multiply') {
     multiply(a,b);
-    return numCount += 1;
+    return firstOperation = 1;
   } else if (c === 'divide') {
     divide(a,b);
-    return numCount += 1;
+    return firstOperation = 1;
   } else {
     return 'ERROR!'
   }
@@ -66,7 +66,6 @@ btns.forEach(button =>
     if (button.id === 'clear') {
       clearInput();
     } else if (button.id === 'del') {
-      currentInput.pop();
       deleteLastNumber();
     } else {
       saveInput(button.id);
@@ -87,43 +86,47 @@ let operator = [];
 
 function saveInput(userInput) {
   if (userInput === 'add' || userInput === 'sub' || userInput === 'multiply' || userInput === 'divide') {
-    addHistoryDisplay(currentInput.join(''));
-    addHistoryDisplay(userInput);
-    if (currentInput.length === 0) {
-      return operator[0] = userInput;
+    if (currentInput.length === 0 && runningTotal === null) {
+      return operator = [];
     } else {
-      if (currentNumber.length != 0) { //checks if there is a number already in the array, if there is do math on number with current input
-        currentNumber.push(currentInput.join(''));
-        addHistoryDisplay(currentInput[1]);
-        clearCurrentInput();
-        console.log(currentNumber);
-        let num1 = parseInt(currentNumber[0]);
-        let num2 = parseInt(currentNumber[1]);
-        c = operator[0];
-        clearCurrentNumber();
-        operate(num1, num2, c);
+      addHistoryDisplay(currentInput.join(''));
+      addHistoryDisplay(userInput);
+      if (currentInput.length === 0) {
         return operator[0] = userInput;
-      } else if (currentNumber.length === 0) { 
-        if (numCount === 0) { //this checks if any operation has been saved previously, if not saves number and operator
+      } else {
+        if (currentNumber.length != 0) { //checks if there is a number already in the array, if there is do math on number with current input
           currentNumber.push(currentInput.join(''));
-          console.log(currentNumber);
+          addHistoryDisplay(currentInput[1]);
           clearCurrentInput();
+          console.log(currentNumber);
+          let num1 = parseInt(currentNumber[0]);
+          let num2 = parseInt(currentNumber[1]);
+          c = operator[0];
+          clearCurrentNumber();
+          operate(num1, num2, c);
           return operator[0] = userInput;
-        } else if (numCount > 0) { //checks if there is a previous input
-          if (currentInput.length != 0) { //does operation with current saved number and runningTotal(sum) and saves new operator to continue equation
+        } else if (currentNumber.length === 0) { 
+          if (firstOperation === 0) { //this checks if any operation has been saved previously, if not saves number and operator
             currentNumber.push(currentInput.join(''));
-            clearCurrentInput();
             console.log(currentNumber);
-            let num1 = runningTotal;
-            let num2 = parseInt(currentNumber[0]);
-            c = operator[0];
-            clearCurrentNumber();
-            operate(num1, num2, c);
+            clearCurrentInput();
+            return operator[0] = userInput;
+          } else if (firstOperation > 0) { //checks if there is a previous input
+            if (currentInput.length != 0) { //does operation with current saved number and runningTotal(sum) and saves new operator to continue equation
+              currentNumber.push(currentInput.join(''));
+              clearCurrentInput();
+              console.log(currentNumber);
+              let num1 = runningTotal;
+              let num2 = parseInt(currentNumber[0]);
+              c = operator[0];
+              clearCurrentNumber();
+              operate(num1, num2, c);
+              return operator[0] = userInput;
+            }
+            currentNumber.push(runningTotal); 
+            clearCurrentInput();
             return operator[0] = userInput;
           }
-          currentNumber.push(runningTotal); 
-          clearCurrentInput();
-          return operator[0] = userInput;
         }
       }
     }
@@ -133,7 +136,7 @@ function saveInput(userInput) {
     if (currentInput.length === 0) {
       return;
     } else { 
-      if (numCount != 0) {
+      if (firstOperation != 0) {
         let num2 = parseInt(currentInput.join(''));
         let num1 = runningTotal;
         clearCurrentInput();
@@ -166,7 +169,7 @@ function displayAns(ans) { //Shows current input and answers in calculator displ
     return;  
   } else if (ans === 'clear') {
         display.textContent = '';
-      } else if (numCount > 0) { //needs to properly display runningTotal after each operator
+      } else if (firstOperation > 0) { //needs to properly display runningTotal after each operator
         if (ans === 'add' || ans === 'sub' || ans === 'multiply' || ans === 'divide' || ans === 'equal' || ans === 'clear') {
           display.textContent = Math.round(runningTotal * 100) / 100; //rounds answer to 2 decimal
         } else if (currentInput.length === 1) {
@@ -213,7 +216,7 @@ function clearInput() {
   clearCurrentNumber();
   displayAns('clear');
   addHistoryDisplay('clear');
-  numCount = 0;
+  firstOperation = 0;
   return runningTotal = null;
 }
 
@@ -232,7 +235,7 @@ function addHistoryDisplay(input) {
       input = '÷';
       break;
     case 'equal':
-      input = 'clear';
+      input = '';
       break;
     case 'clear':
       input = 'clear';
@@ -246,7 +249,10 @@ function addHistoryDisplay(input) {
   if (input === 'clear') {
     historyDisplay.textContent = '';
   } else {
-    historyDisplay.textContent += `${input} `;
+    historyDisplay.textContent += `${input} `; 
+    let lengthCheck = historyDisplay.textContent; 
+    lengthCheck = checkLength(lengthCheck); //stops history display overflowing text
+    historyDisplay.textContent = lengthCheck;
   }
 }
 
@@ -270,4 +276,23 @@ function deleteLastNumber() {
   console.log(currentDisplay);
   let lastInputRemoved = currentDisplay.slice(0,-1);
   display.textContent = lastInputRemoved;
+}
+
+function deleteLastInput() {
+  if (currentInput.length > 0) {
+    return currentInput.pop();
+  } else if (operator.length > 0) {
+    return operator = [];
+  } else if (currentNumber.length > 0) {
+    return currentNumber.pop();
+  }
+}
+
+function checkLength(displayContent) {
+  if (displayContent.length > 30) {
+    let shorten = displayContent.length - 30;
+    return displayContent.slice(shorten - 1);
+  } else {
+    return displayContent;
+  }
 }
