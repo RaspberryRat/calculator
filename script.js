@@ -111,7 +111,7 @@ function saveInput(userInput) {
             console.log(currentNumber);
             clearCurrentInput();
             return operator[0] = userInput;
-          } else if (firstOperation > 0) { //checks if there is a previous input
+          } else if (firstOperation === 1) { //checks if there is a previous input
             if (currentInput.length != 0) { //does operation with current saved number and runningTotal(sum) and saves new operator to continue equation
               currentNumber.push(currentInput.join(''));
               clearCurrentInput();
@@ -136,7 +136,7 @@ function saveInput(userInput) {
     if (currentInput.length === 0) {
       return;
     } else { 
-      if (firstOperation != 0) {
+      if (firstOperation === 1) {
         let num2 = parseInt(currentInput.join(''));
         let num1 = runningTotal;
         clearCurrentInput();
@@ -169,7 +169,7 @@ function displayAns(ans) { //Shows current input and answers in calculator displ
     return;  
   } else if (ans === 'clear') {
         display.textContent = '';
-      } else if (firstOperation > 0) { //needs to properly display runningTotal after each operator
+      } else if (firstOperation === 1) { //needs to properly display runningTotal after each operator
         if (ans === 'add' || ans === 'sub' || ans === 'multiply' || ans === 'divide' || ans === 'equal' || ans === 'clear') {
           display.textContent = Math.round(runningTotal * 100) / 100; //rounds answer to 2 decimal
         } else if (currentInput.length === 1) {
@@ -249,8 +249,10 @@ function addHistoryDisplay(input) {
   if (input === 'clear') {
     historyDisplay.textContent = '';
   } else {
-    historyDisplay.textContent += `${input} `; 
-    let lengthCheck = historyDisplay.textContent; 
+    historyDisplay.textContent += `${input} `;
+    let currentContent = historyDisplay.textContent;
+    currentContent = removeOperator(currentContent); //stops double display of operators
+    let lengthCheck = currentContent; 
     lengthCheck = checkLength(lengthCheck); //stops history display overflowing text
     historyDisplay.textContent = lengthCheck;
   }
@@ -296,3 +298,17 @@ function checkLength(displayContent) {
     return displayContent;
   }
 }
+
+function removeOperator(histDis) { //removes last displayed operator if operator switched
+let lastInput = histDis.slice(-2, -1);
+let secondLastInput = histDis.slice(-5, -4);
+let options = ['+', '-', '×', '÷']
+  if (options.includes(lastInput) && options.includes(secondLastInput)) {
+    let correctedInput = histDis.slice(0, -5);
+    let newOperator = histDis.slice(-2);
+    return correctedInput + newOperator;
+  } else {  
+    return histDis;
+  }
+}
+
