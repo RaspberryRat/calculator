@@ -341,8 +341,8 @@ function deleteLastInput() {
 }
 
 function checkLength(displayContent) {
-  if (displayContent.length > 30) {
-    let shorten = displayContent.length - 30;
+  if (displayContent.length > 35) {
+    let shorten = displayContent.length - 35;
     return displayContent.slice(shorten - 1);
   } else {
     return displayContent;
